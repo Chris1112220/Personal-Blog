@@ -1,8 +1,14 @@
 from flask import Blueprint, request, jsonify
 from flask_jwt_extended import jwt_required
 from .models import Post, db
+from flask import render_template
 
 main = Blueprint('main', __name__)
+
+
+@main.route('/')
+def home():
+    return render_template('base.html')
 
 
 @main.route('/posts', methods=['GET'])
@@ -20,3 +26,13 @@ def create_post():
     db.session.add(post)
     db.session.commit()
     return jsonify(post.to_dict()), 201
+
+
+@main.route('/create', methods=['GET'])
+def create_view():
+    return render_template('create.html')
+
+
+@main.route('/view', methods=['GET'])
+def view_view():
+    return render_template('view.html')
