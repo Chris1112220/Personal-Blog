@@ -1,29 +1,9 @@
 {% extends "base.html" %}
-
 {% block content %}
   <h2>Create a New Post</h2>
-  <form id="postForm">
-    <input type="text" name="title" placeholder="Title" required><br><br>
-    <textarea name="content" placeholder="Your post..." required></textarea><br><br>
-    <button type="submit">Submit</button>
+  <form method="POST">
+    <input type="text" name="title" placeholder="Title" class="form-control mb-2" required>
+    <textarea name="content" placeholder="Your post..." class="form-control mb-2" required></textarea>
+    <button class="btn btn-primary" type="submit">Submit</button>
   </form>
-
-  <script>
-    const form = document.getElementById('postForm');
-    form.addEventListener('submit', async (e) => {
-      e.preventDefault();
-      const title = form.title.value;
-      const content = form.content.value;
-      const response = await fetch('/posts', {
-        method: 'POST',
-        headers: {
-          'Content-Type': 'application/json',
-          'Authorization': 'Bearer YOUR_JWT_HERE'  // Replace with your token
-        },
-        body: JSON.stringify({ title, content })
-      });
-      const result = await response.json();
-      alert('Post created!');
-    });
-  </script>
 {% endblock %}

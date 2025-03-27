@@ -1,13 +1,10 @@
-# Virtual environments
 venv/
 __pycache__/
 *.pyc
-
-# Editor settings
-.vscode/
-.idea/
-
-# Environment + config
 .env
-*.db
 instance/
+*.sqlite3
+*.db
+*.log
+.env
+.DS_Store

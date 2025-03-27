@@ -1,5 +1,5 @@
 from flask_sqlalchemy import SQLAlchemy
-
+from datetime import datetime, timezone
 db = SQLAlchemy()
 
 
@@ -13,10 +13,13 @@ class Post(db.Model):
     id = db.Column(db.Integer, primary_key=True)
     title = db.Column(db.String(100), nullable=False)
     content = db.Column(db.Text, nullable=False)
+    date_posted = db.Column(db.DateTime, nullable=False,
+                            default=lambda: datetime.now(timezone.utc))
 
     def to_dict(self):
         return {
             "id": self.id,
             "title": self.title,
-            "content": self.content
+            "content": self.content,
+            "date_posted": self.date_posted.isoformat()
         }

@@ -1,38 +1,41 @@
-from flask import Blueprint, request, jsonify
-from flask_jwt_extended import jwt_required
+from flask import Blueprint, render_template, request, redirect, url_for
 from .models import Post, db
-from flask import render_template
 
 main = Blueprint('main', __name__)
 
 
 @main.route('/')
-def home():
-    return render_template('base.html')
+def index():
+    posts = Post.query.order_by(Post.id.desc()).all()
+    return render_template('view.html', posts=posts)
 
 
-@main.route('/posts', methods=['GET'])
-@jwt_required()
-def get_posts():
-    posts = Post.query.all()
-    return jsonify([p.to_dict() for p in posts])
-
-
-@main.route('/posts', methods=['POST'])
-@jwt_required()
-def create_post():
-    data = request.get_json()
-    post = Post(title=data['title'], content=data['content'])
-    db.session.add(post)
-    db.session.commit()
-    return jsonify(post.to_dict()), 201
-
-
-@main.route('/create', methods=['GET'])
-def create_view():
+@main.route('/create', methods=['GET', 'POST'])
+def create():
+    if request.method == 'POST':
+        title = request.form['title']
+        content = request.form['content']
+        new_post = Post(title=title, content=content)
+        db.session.add(new_post)
+        db.session.commit()
+        return redirect(url_for('main.index'))
     return render_template('create.html')
 
 
-@main.route('/view', methods=['GET'])
-def view_view():
-    return render_template('view.html')
+@main.route('/update/<int:id>', methods=['GET', 'POST'])
+def update(id):
+    post = Post.query.get_or_404(id)
+    if request.method == 'POST':
+        post.title = request.form['title']
+        post.content = request.form['content']
+        db.session.commit()
+        return redirect(url_for('main.index'))
+    return render_template('update.html', post=post)
+
+
+@main.route('/delete/<int:id>')
+def delete(id):
+    post = Post.query.get_or_404(id)
+    db.session.delete(post)
+    db.session.commit()
+    return redirect(url_for('main.index'))
