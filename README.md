@@ -1,17 +1,32 @@
-# Personal Blog Backend API (Flask + PostgreSQL)
+# Personal Blog (Flask + PostgreSQL + Bootstrap)
+
+This is a fully functional CRUD blog web application built with Flask, PostgreSQL, and Bootstrap 5. It allows users to create, view, update, and delete blog posts with timestamps and a clean UI.
+
+---
 
 ## Features
-- User registration and login with JWT
-- Authenticated blog post creation and retrieval
-- PostgreSQL + SQLAlchemy for data persistence
-- Token-protected routes
 
-## Setup
-```bash
-git clone https://github.com/Chris1112220/Personal-Blog.git
-cd Personal-Blog
-python -m venv venv
-venv\Scripts\activate
-pip install -r requirements.txt
-set FLASK_APP=run.py
-flask run
+- Create new blog posts
+- View all existing posts
+- Update existing posts
+- Delete posts with confirmation
+- Timestamps using UTC datetime
+- Modular Flask app with Blueprint & factory pattern
+- Bootstrap-styled responsive layout
+- Database powered by PostgreSQL + SQLAlchemy
+- Migrations handled with Flask-Migrate
+- JWT Authentication (Register/Login API)
+
+---
+
+## Tech Stack
+
+| Layer         | Tech                            |
+|---------------|----------------------------------|
+| Backend       | Python 3.12 + Flask              |
+| Database      | PostgreSQL + SQLAlchemy          |
+| Auth          | Flask-JWT-Extended               |
+| Frontend      | HTML + Bootstrap (via CDN)       |
+| Migrations    | Flask-Migrate (Alembic)          |
+
+---
