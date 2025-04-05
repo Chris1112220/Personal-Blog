@@ -1,0 +1,11 @@
+[project]
+name = "personal_blog"
+version = "0.1.0"
+description = "A personal blog app built with Flask"
+authors = ["Chris Roberts <Christopher.roberts11220@gmail.com>"]
+dependencies = []
+
+[tool.pytest.ini_options]
+minversion = "6.0"
+addopts = "-ra -q"
+testpaths = ["tests"]
