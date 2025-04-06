@@ -20,6 +20,7 @@ def login_required(f):
 
 
 @main.route('/')
+@login_required
 def index():
     posts = Post.query.order_by(Post.id.desc()).all()
     return render_template('view.html', posts=posts)

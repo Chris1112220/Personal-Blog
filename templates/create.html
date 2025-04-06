@@ -1,0 +1,9 @@
+{% extends "base.html" %}
+{% block content %}
+  <h2>Create New Post</h2>
+  <form method="POST">
+    <input type="text" name="title" placeholder="Title" required>
+    <textarea name="content" rows="10" placeholder="Write your content here..." required></textarea>
+    <input type="submit" value="Create Post">
+  </form>
+{% endblock %}
