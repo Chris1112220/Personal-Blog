@@ -62,7 +62,6 @@ def logout():
 
 @auth_bp.route('/register-page', methods=['GET', 'POST'])
 def register_page():
-    print("📩 /register-page route HIT")
     if request.method == 'POST':
         username = request.form['username']
         password = request.form['password']
