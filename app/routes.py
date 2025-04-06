@@ -1,6 +1,7 @@
-from flask import Blueprint, render_template, request, redirect, url_for, session, flash
+from flask import Blueprint, render_template, request, redirect, url_for, session, flash, send_from_directory
 from .models import Post, db
 from functools import wraps
+import os
 
 main = Blueprint('main', __name__)
 
@@ -63,3 +64,13 @@ def delete(id):
     db.session.delete(post)
     db.session.commit()
     return redirect(url_for('main.index'))
+
+# Google verification route (⚠️ Replace filename below with your actual file)
+
+
+@main.route('/google74550b9db6d52a16.html')
+def google_verify():
+    return send_from_directory(
+        os.path.join(os.path.dirname(__file__), '..', 'static'),
+        'google74550b9db6d52a16.html'
+    )
