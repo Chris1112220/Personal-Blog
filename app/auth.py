@@ -58,3 +58,24 @@ def logout():
     session.pop('user', None)
     flash("You have been logged out.")
     return redirect(url_for('main.index'))
+
+
+@auth_bp.route('/register-page', methods=['GET', 'POST'])
+def register_page():
+    if request.method == 'POST':
+        username = request.form['username']
+        password = request.form['password']
+
+        if User.query.filter_by(username=username).first():
+            flash("User already exists.")
+            return redirect(url_for('auth.register_page'))
+
+        hashed = generate_password_hash(password)
+        user = User(username=username, password=hashed)
+        db.session.add(user)
+        db.session.commit()
+
+        flash("Registration successful. Please log in.")
+        return redirect(url_for('auth.login_page'))
+
+    return render_template('register.html')

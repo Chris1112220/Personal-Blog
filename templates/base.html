@@ -18,7 +18,9 @@
         <a class="nav-link" href="{{ url_for('auth.logout') }}">Logout</a>
         <span style="margin-left: 10px;">Logged in as {{ session['user'] }}</span>
       {% else %}
+      
         <a class="nav-link" href="{{ url_for('auth.login_page') }}">Login</a>
+        <a class="nav-link" href="{{ url_for('auth.register_page') }}">Register</a>
       {% endif %}
     </nav>
 
