@@ -1,24 +1,27 @@
 <!DOCTYPE html>
-<html>
+<html lang="en">
   <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <title>Personal Blog</title>
-    <!-- ✅ Loads style.css from static folder -->
+
+    <!-- Loads style.css from static folder -->
     <link rel="stylesheet" href="{{ url_for('static', filename='style.css') }}">
   </head>
   <body>
-    
+
     <!-- Blog Title -->
     <h1 style="text-align:center; margin-bottom: 30px;">📝 My Personal Blog</h1>
 
     <!-- Nav Bar -->
     <nav>
       <a class="nav-link" href="{{ url_for('main.index') }}">Home</a>
+      
       {% if session.get('user') %}
         <a class="nav-link" href="{{ url_for('main.create') }}">Create</a>
         <a class="nav-link" href="{{ url_for('auth.logout') }}">Logout</a>
-        <span style="margin-left: 10px;">Logged in as {{ session['user'] }}</span>
+        <span style="margin-left: 10px; color: #999;">Logged in as {{ session['user'] }}</span>
       {% else %}
-      
         <a class="nav-link" href="{{ url_for('auth.login_page') }}">Login</a>
         <a class="nav-link" href="{{ url_for('auth.register_page') }}">Register</a>
       {% endif %}
