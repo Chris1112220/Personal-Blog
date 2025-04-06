@@ -16,7 +16,7 @@ def create_app():
             os.path.dirname(__file__), '..', 'templates'),
         static_folder=os.path.join(os.path.dirname(__file__), '..', 'static')
     )
-    app.config['SQLALCHEMY_DATABASE_URI'] = 'postgresql://postgres:Topher1212@localhost/personal_blog'
+    app.config['SQLALCHEMY_DATABASE_URI'] = os.environ.get('DATABASE_URL')
     app.config['JWT_SECRET_KEY'] = 'super-secret-key'
     app.secret_key = 'abc'
 
