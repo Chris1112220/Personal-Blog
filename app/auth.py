@@ -2,9 +2,10 @@ from flask import Blueprint, request, jsonify, session, render_template, redirec
 from flask_jwt_extended import create_access_token
 from werkzeug.security import generate_password_hash, check_password_hash
 from .models import User, db
-from flask import session
 
 auth_bp = Blueprint('auth', __name__)
+
+ADMIN_USERNAME = "Chris"
 
 
 @auth_bp.route('/register', methods=['POST'])
@@ -16,8 +17,9 @@ def register():
     if User.query.filter_by(username=data['username']).first():
         return jsonify({"msg": "User already exists"}), 409
 
+    is_admin = data['username'] == ADMIN_USERNAME
     hashed = generate_password_hash(data['password'])
-    user = User(username=data['username'], password=hashed)
+    user = User(username=data['username'], password=hashed, is_admin=is_admin)
     db.session.add(user)
     db.session.commit()
     return jsonify({"msg": "User created"}), 201
@@ -50,8 +52,6 @@ def login_page():
             return redirect(url_for('auth.login_page'))
     return render_template('login.html')
 
-# Logout Route
-
 
 @auth_bp.route('/logout')
 def logout():
@@ -70,8 +70,9 @@ def register_page():
             flash("User already exists.")
             return redirect(url_for('auth.register_page'))
 
+        is_admin = username == ADMIN_USERNAME
         hashed = generate_password_hash(password)
-        user = User(username=username, password=hashed)
+        user = User(username=username, password=hashed, is_admin=is_admin)
         db.session.add(user)
         db.session.commit()
 
