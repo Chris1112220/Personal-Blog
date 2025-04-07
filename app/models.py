@@ -1,5 +1,6 @@
 from flask_sqlalchemy import SQLAlchemy
 from datetime import datetime, timezone
+from sqlalchemy import func
 
 db = SQLAlchemy()
 
@@ -32,5 +33,8 @@ class Comment(db.Model):
     content = db.Column(db.Text, nullable=False)
     post_id = db.Column(db.Integer, db.ForeignKey('post.id'), nullable=False)
     username = db.Column(db.String(80), nullable=False)
-    date_posted = db.Column(db.DateTime, nullable=False,
-                            default=lambda: datetime.now(timezone.utc))
+    date_posted = db.Column(
+        db.DateTime,
+        nullable=False,
+        server_default=func.now()
+    )

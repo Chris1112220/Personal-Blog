@@ -14,13 +14,26 @@
       <a href="{{ url_for('main.delete', id=post.id) }}">Delete</a>
     {% endif %}
 
+    <!-- Comments -->
     {% for comment in comments if comment.post_id == post.id %}
       <div class="comment" style="margin-left: 20px; border-left: 2px solid #ccc; padding-left: 10px; margin-top: 10px;">
-        <p><strong>{{ comment.username }}</strong> <small style="color: #666;">on {{ comment.date_posted.strftime('%Y-%m-%d %H:%M') }}</small></p>
+        <p><strong>{{ comment.username }}</strong> 
+          <small style="color: #666;">on {{ comment.date_posted.strftime('%Y-%m-%d %H:%M') }}</small>
+        </p>
         <p>{{ comment.content }}</p>
       </div>
     {% endfor %}
+
+    <!-- Comment Form -->
+    {% if session.get('user') %}
+      <form method="POST" action="{{ url_for('main.comment', post_id=post.id) }}" style="margin-top: 10px;">
+        <textarea name="content" placeholder="Write a comment..." required style="width: 100%; height: 80px;"></textarea>
+        <button type="submit">Post Comment</button>
+      </form>
+    {% else %}
+      <p><em>Log in to leave a comment.</em></p>
+    {% endif %}
   </div>
-{% endfor %}
+  {% endfor %}
 
 {% endblock %}
