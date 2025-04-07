@@ -4,30 +4,23 @@
   <h2>All Blog Posts</h2>
 
   {% for post in posts %}
-    <div class="post">
-      <h3>{{ post.title }}</h3>
-      <p>{{ post.content }}</p>
-      <p><small>Posted on {{ post.date_posted.strftime('%Y-%m-%d %H:%M') }}</small></p>
+  <div class="post">
+    <h3>{{ post.title }}</h3>
+    <p><small>Posted on {{ post.date_posted.strftime('%Y-%m-%d %H:%M') }}</small></p>
+    <p>{{ post.content }}</p>
 
-      {% if session.get('user') and session.get('user') == 'yourusername' %}
-        <a href="{{ url_for('main.update', id=post.id) }}">Edit</a> |
-        <a href="{{ url_for('main.delete', id=post.id) }}">Delete</a>
-      {% endif %}
+    {% if session.get('user') %}
+      <a href="{{ url_for('main.update', id=post.id) }}">Edit</a> |
+      <a href="{{ url_for('main.delete', id=post.id) }}">Delete</a>
+    {% endif %}
 
-      <!-- Comments Section -->
-      <h4>Comments:</h4>
-      {% for comment in comments if comment.post_id == post.id %}
-        <p><strong>{{ comment.username }}:</strong> {{ comment.content }}</p>
-      {% endfor %}
-
-      {% if session.get('user') %}
-        <form action="{{ url_for('main.comment', post_id=post.id) }}" method="POST">
-          <textarea name="content" placeholder="Write a comment..." required></textarea>
-          <button type="submit">Post Comment</button>
-        </form>
-      {% endif %}
-    </div>
-    <hr>
-  {% endfor %}
+    {% for comment in comments if comment.post_id == post.id %}
+      <div class="comment" style="margin-left: 20px; border-left: 2px solid #ccc; padding-left: 10px; margin-top: 10px;">
+        <p><strong>{{ comment.username }}</strong> <small style="color: #666;">on {{ comment.date_posted.strftime('%Y-%m-%d %H:%M') }}</small></p>
+        <p>{{ comment.content }}</p>
+      </div>
+    {% endfor %}
+  </div>
+{% endfor %}
 
 {% endblock %}
